@@ -1,0 +1,27 @@
+{
+  "name": "roots",
+  "version": "6.5.1",
+  "author": "Ben Word <ben@benword.com>",
+  "homepage": "http://roots.io",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/roots/roots.git"
+  },
+  "bugs": {
+    "url" : "https://github.com/roots/roots/issues"
+  },
+  "licenses": [{
+    "type": "MIT",
+    "url": "http://opensource.org/licenses/MIT"
+  }],
+
+  "dependencies": {
+    "bootstrap": "~3.0.3",
+    "sass-bootstrap": "~3.0.2",
+    "modernizr": "~2.6.2",
+    "requirejs": "~2.1.8",
+    "jquery": "~1.10.2"
+  },
+
+  "devDependencies": {}
+}

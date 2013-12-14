@@ -8,12 +8,17 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
 
+    pkg: grunt.file.readJSON('package.json'),
     // Project settings
     yeoman: {
+      useSass: false,
       // Configurable paths
       app: '.',
       dist: '../roots-distrib'
     },
+
+    // JAVASCRIPT
+
     jshint: {
       options: {
         jshintrc: '.jshintrc',
@@ -25,70 +30,7 @@ module.exports = function(grunt) {
         '!assets/js/scripts.min.js'
       ]
     },
-    less: {
-      watch: {
-        files: {
-          'assets/css/main.min.css': [
-            'assets/less/app.less'
-          ]
-        },
-        options: {
-          compress: true,
-          // LESS source map
-          // To enable, set sourceMap to true and update sourceMapRootpath based on your install
-          sourceMap: false,
-          sourceMapFilename: 'assets/css/main.min.css.map',
-          sourceMapRootpath: '/app/themes/roots/'
-        }
-      }
-    },
-    compass: {
-      options: {
-        sassDir: 'assets/sass',
-        cssDir: '.tmp/assets/css',
-        generatedImagesDir: '.tmp/images/generated',
-        imagesDir: 'assets/img',
-        javascriptsDir: 'assets/js',
-        fontsDir: 'assets/fonts',
-        importPath: 'bower_components',
-        httpImagesPath: 'assets/img',
-        httpGeneratedImagesPath: 'assets/img/generated',
-        httpFontsPath: 'assets/fonts',
-        relativeAssets: false,
-        assetCacheBuster: false,
-        debugInfo: true
-      },
-      watch: {
-        options: {
-          generatedImagesDir: 'assets/img/generated'
-        }
-      }
-    },
-    cssmin: {
-      options: {
-        report: 'min'
-      },
-      watch: {
-        files: {
-          'assets/css/main.min.css': [
-            '.tmp/assets/css/app.css'
-          ]
-        }
-      }
-    },
-    autoprefixer: {
-      options: {
-        browsers: ['last 1 version']
-      },
-      watch: {
-        files: [{
-          expand: true,
-          cwd: 'assets/css',
-          src: 'main.min.css',
-          dest: 'assets/css'
-        }]
-      }
-    },
+
     uglify: {
       watch: {
         files: {
@@ -116,6 +58,108 @@ module.exports = function(grunt) {
         }
       }
     },
+
+    // CSS
+
+    // Less compilation
+    less: {
+      watch: {
+        files: {
+          'assets/css/main.min.css': [
+            'assets/less/app.less'
+          ]
+        },
+        options: {
+          compress: true,
+          // LESS source map
+          // To enable, set sourceMap to true and update sourceMapRootpath based on your install
+          sourceMap: false,
+          sourceMapFilename: 'assets/css/main.min.css.map',
+          sourceMapRootpath: '/app/themes/roots/'
+        }
+      }
+    },
+
+    // Sass compilation
+    compass: {
+      options: {
+        sassDir: 'assets/sass',
+        cssDir: '.tmp/assets/css',
+        // TODO : figure out what's the use of the options below
+        generatedImagesDir: '.tmp/images/generated',
+        imagesDir: 'assets/img',
+        javascriptsDir: 'assets/js',
+        fontsDir: 'assets/fonts',
+        importPath: 'bower_components',
+        httpImagesPath: 'assets/img',
+        httpGeneratedImagesPath: 'assets/img/generated',
+        httpFontsPath: 'assets/fonts',
+        relativeAssets: false,
+        assetCacheBuster: false,
+        debugInfo: true
+      },
+      watch: {
+        options: {
+          generatedImagesDir: 'assets/img/generated'
+        }
+      }
+    },
+
+    // Sass minification
+    cssmin: {
+      options: {
+        report: 'min'
+      },
+      watch: {
+        files: {
+          'assets/css/main.min.css': [
+            '.tmp/assets/css/app.css'
+          ]
+        }
+      }
+    },
+
+    // CSS-autoprefixer
+    autoprefixer: {
+      options: {
+        browsers: ['last 1 version']
+      },
+      watch: {
+        files: [{
+          expand: true,
+          cwd: 'assets/css',
+          src: 'main.min.css',
+          dest: 'assets/css'
+        }]
+      }
+    },
+
+    // IMAGES
+
+    imagemin: {
+      options: {
+        force: true
+      },
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'assets/img',
+          src: '{,*/}*.{gif,jpeg,jpg,png}',
+          dest: '<%= yeoman.dist %>/assets/img'
+        }]
+      }
+    },
+    svgmin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'assets/img',
+          src: '{,*/}*.svg',
+          dest: '<%= yeoman.dist %>/assets/img'
+        }]
+      }
+    },
+
     version: {
       options: {
         file: 'lib/scripts.php',
@@ -125,6 +169,7 @@ module.exports = function(grunt) {
         jsHandle: 'roots_scripts'
       }
     },
+
     // Generates a custom Modernizr build that includes only the tests you
     // reference in your app
     modernizr: {
@@ -136,6 +181,8 @@ module.exports = function(grunt) {
       ],
       uglify: true
     },
+
+    // Automatic tasks
     watch: {
       less: {
         files: [
@@ -156,9 +203,8 @@ module.exports = function(grunt) {
         ],
         tasks: ['jshint', 'uglify', 'version']
       },
+      // Files that trigger a livereload event
       livereload: {
-        // Browser live reloading
-        // https://github.com/gruntjs/grunt-contrib-watch#live-reloading
         options: {
           livereload: true
         },
@@ -170,8 +216,11 @@ module.exports = function(grunt) {
         ]
       }
     },
+
+    // Empties folders to start fresh
     clean: {
       options: {
+        // force is needed in case of deleting files outside the root directory
         force: true
       },
       watch: [
@@ -182,6 +231,8 @@ module.exports = function(grunt) {
         '<%= yeoman.dist %>'
       ]
     },
+
+    // Copies remaining unprocessed files to dist
     copy: {
       dist: {
         files: [{
@@ -206,19 +257,39 @@ module.exports = function(grunt) {
   });
 
   // Register tasks
+
+  if (grunt.config.get(['yeoman.useSass'])) {
+    grunt.registerTask('build-css', [
+      'compass',
+      'cssmin',
+    ]);
+  } else {
+    grunt.registerTask('build-css', [
+      'less',
+    ]);
+  }
+
   grunt.registerTask('default', [
     'clean:watch',
-//    'less',
-    'compass',
-    'cssmin',
+    'build-css',
     'autoprefixer',
     'uglify',
     'version'
   ]);
+
   grunt.registerTask('dist', [
     'clean:dist',
     'modernizr',
+    'imagemin',
+    'svgmin',
     'copy:dist'
   ]);
+
+  // Aliases
+  grunt.registerTask('server', function () {
+      grunt.log.warn('You can also use `watch` task.');
+      grunt.task.run(['watch']);
+  });
+
 
 };

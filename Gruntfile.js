@@ -1,11 +1,10 @@
 'use strict';
 module.exports = function(grunt) {
 
-  // Load grunt tasks automatically
-  require('load-grunt-tasks')(grunt);
-
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
+  // Load grunt tasks automatically
+  require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
     jshint: {
@@ -20,7 +19,7 @@ module.exports = function(grunt) {
       ]
     },
     less: {
-      dist: {
+      watch: {
         files: {
           'assets/css/main.min.css': [
             'assets/less/app.less'
@@ -52,7 +51,7 @@ module.exports = function(grunt) {
         assetCacheBuster: false,
         debugInfo: true
       },
-      dist: {
+      watch: {
         options: {
           generatedImagesDir: 'assets/img/generated'
         }
@@ -62,7 +61,7 @@ module.exports = function(grunt) {
       options: {
         report: 'gzip'
       },
-      dist: {
+      watch: {
         files: {
           'assets/css/main.min.css': [
             '.tmp/assets/css/app.css'
@@ -74,7 +73,7 @@ module.exports = function(grunt) {
       options: {
         browsers: ['last 1 version']
       },
-      dist: {
+      watch: {
         files: [{
           expand: true,
           cwd: 'assets/css',
@@ -84,7 +83,7 @@ module.exports = function(grunt) {
       }
     },
     uglify: {
-      dist: {
+      watch: {
         files: {
           'assets/js/scripts.min.js': [
             'bower_components/bootstrap/js/transition.js',
@@ -154,7 +153,7 @@ module.exports = function(grunt) {
       }
     },
     clean: {
-      dist: [
+      watch: [
         'assets/css/main.min.css',
         'assets/js/scripts.min.js'
       ]

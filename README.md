@@ -7,6 +7,7 @@
 * Added a custom bootstrap.{less,sass}, not using the one in bower_components
 * jshint-stylish for better reports
 * CSS autoprefixer task
+* Modernizr custom minimal build
 
 
 # [Roots Theme](http://roots.io/)

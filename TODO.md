@@ -12,7 +12,18 @@
     "grunt-rev": "~0.1.0",
     "grunt-usemin": "~2.0.0",
     "grunt-mocha": "~0.4.0",
+<<<<<<< HEAD
     "grunt-modernizr": "~0.3.0",
     "grunt-newer": "~0.5.4",
     "grunt-svgmin": "~0.2.0",
     "grunt-concurrent": "~0.3.0"
+=======
+    "grunt-newer": "~0.5.4",
+    "grunt-svgmin": "~0.2.0",
+    "grunt-concurrent": "~0.3.0"
+
+
+## Ideas
+
+* move jQuery to footer (possible FOUC)
+>>>>>>> modernizr-custom-build

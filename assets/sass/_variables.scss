@@ -6,11 +6,10 @@
 // Brand colors
 // -------------------------
 
-@brand-primary:         #ff0080;
+$brand-primary:         #ff0080;
 
 
 // Iconography
 // -------------------------
 
-@icon-font-path:          "../../bower_components/bootstrap/dist/fonts/";
-
+$icon-font-path: 			"../../bower_components/sass-bootstrap/fonts/";

@@ -22,4 +22,4 @@
 
 ## Ideas
 
-* move jQuery to footer (possible FOUC)
+* move jQuery to footer ? (possible FOUC)

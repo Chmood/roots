@@ -1,15 +1,26 @@
 ## Chmood's fork
 
-* Added bower.json
-* load-grunt-task and time-grunt support
-* Using bower_components for bootrstrap's stylesheets and plugins
-* Added sass-bootstrap support with compass and cssmin tasks
+### CSS
+
+* Added sass-bootstrap support (with compass and cssmin tasks)
 * Added a custom bootstrap.{less,sass}, not using the one in bower_components
 ** Plus a custom variables.{less,sass} overide
-* jshint-stylish for better reports
 * CSS autoprefixer task
-* Modernizr custom minimal build
+
+### Javascript
+* jshint-stylish for better reports
+
+### Build
+
 * Configurable dist folder for optimized production builds
+* imagemin and svgmin support
+* Modernizr custom minimal build
+
+### Others
+
+* Added bower.json
+* Using bower_components for bootrstrap's stylesheets and plugins
+* load-grunt-task and time-grunt support
 
 
 # [Roots Theme](http://roots.io/)

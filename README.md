@@ -1,3 +1,14 @@
+## Chmood's fork
+
+* Added bower.json
+* load-grunt-task and time-grunt support
+* Using bower_components for bootrstrap's stylesheets and plugins
+* Added sass-bootstrap support with compass and cssmin tasks
+* Added a custom bootrstrap.{less,sass}, not using the one in bower_components
+* jshint-stylish for better reports
+* CSS autoprefixer task
+
+
 # [Roots Theme](http://roots.io/)
 
 Roots is a WordPress starter theme based on [HTML5 Boilerplate](http://html5boilerplate.com/) & [Bootstrap](http://getbootstrap.com/) that will help you make better themes.

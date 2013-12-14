@@ -1,14 +1,21 @@
 'use strict';
 module.exports = function(grunt) {
 
+  // Load grunt tasks automatically
+  require('load-grunt-tasks')(grunt);
+
+  // Time how long tasks take. Can help when optimizing build times
+  require('time-grunt')(grunt);
+
   grunt.initConfig({
     jshint: {
       options: {
-        jshintrc: '.jshintrc'
+        jshintrc: '.jshintrc',
+        reporter: require('jshint-stylish')
       },
       all: [
         'Gruntfile.js',
-        'assets/js/*.js',
+        'assets/js/{,*/}*.js',
         '!assets/js/scripts.min.js'
       ]
     },
@@ -29,22 +36,69 @@ module.exports = function(grunt) {
         }
       }
     },
+    compass: {
+      options: {
+        sassDir: 'assets/sass',
+        cssDir: '.tmp/assets/css',
+        generatedImagesDir: '.tmp/images/generated',
+        imagesDir: 'assets/img',
+        javascriptsDir: 'assets/js',
+        fontsDir: 'assets/fonts',
+        importPath: 'bower_components',
+        httpImagesPath: 'assets/img',
+        httpGeneratedImagesPath: 'assets/img/generated',
+        httpFontsPath: 'assets/fonts',
+        relativeAssets: false,
+        assetCacheBuster: false,
+        debugInfo: true
+      },
+      dist: {
+        options: {
+          generatedImagesDir: 'assets/img/generated'
+        }
+      }
+    },
+    cssmin: {
+      options: {
+        report: 'gzip'
+      },
+      dist: {
+        files: {
+          'assets/css/main.min.css': [
+            '.tmp/assets/css/app.css'
+          ]
+        }
+      }
+    },
+    autoprefixer: {
+      options: {
+        browsers: ['last 1 version']
+      },
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'assets/css',
+          src: 'main.min.css',
+          dest: 'assets/css'
+        }]
+      }
+    },
     uglify: {
       dist: {
         files: {
           'assets/js/scripts.min.js': [
-            'assets/js/plugins/bootstrap/transition.js',
-            'assets/js/plugins/bootstrap/alert.js',
-            'assets/js/plugins/bootstrap/button.js',
-            'assets/js/plugins/bootstrap/carousel.js',
-            'assets/js/plugins/bootstrap/collapse.js',
-            'assets/js/plugins/bootstrap/dropdown.js',
-            'assets/js/plugins/bootstrap/modal.js',
-            'assets/js/plugins/bootstrap/tooltip.js',
-            'assets/js/plugins/bootstrap/popover.js',
-            'assets/js/plugins/bootstrap/scrollspy.js',
-            'assets/js/plugins/bootstrap/tab.js',
-            'assets/js/plugins/bootstrap/affix.js',
+            'bower_components/bootstrap/js/transition.js',
+            'bower_components/bootstrap/js/alert.js',
+            'bower_components/bootstrap/js/button.js',
+            'bower_components/bootstrap/js/carousel.js',
+            'bower_components/bootstrap/js/collapse.js',
+            'bower_components/bootstrap/js/dropdown.js',
+            'bower_components/bootstrap/js/modal.js',
+            'bower_components/bootstrap/js/tooltip.js',
+            'bower_components/bootstrap/js/popover.js',
+            'bower_components/bootstrap/js/scrollspy.js',
+            'bower_components/bootstrap/js/tab.js',
+            'bower_components/bootstrap/js/affix.js',
             'assets/js/plugins/*.js',
             'assets/js/_*.js'
           ]
@@ -71,7 +125,13 @@ module.exports = function(grunt) {
           'assets/less/*.less',
           'assets/less/bootstrap/*.less'
         ],
-        tasks: ['less', 'version']
+        tasks: ['less', 'autoprefixer', 'version']
+      },
+      compass: {
+        files: [
+          'assets/sass/{,*/}*.{scss,sass}'
+        ],
+        tasks: ['compass', 'cssmin', 'autoprefixer', 'version']
       },
       js: {
         files: [
@@ -101,18 +161,13 @@ module.exports = function(grunt) {
     }
   });
 
-  // Load tasks
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-less');
-  grunt.loadNpmTasks('grunt-wp-version');
-
   // Register tasks
   grunt.registerTask('default', [
     'clean',
-    'less',
+//    'less',
+    'compass',
+    'cssmin',
+    'autoprefixer',
     'uglify',
     'version'
   ]);

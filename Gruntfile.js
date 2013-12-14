@@ -14,7 +14,7 @@ module.exports = function(grunt) {
       useSass: true,
       // Configurable paths
       app: '.',
-      dist: '../roots-distrib'
+      dist: '../<%= pkg.name %>-dist'
     },
 
     // JAVASCRIPT
@@ -85,6 +85,8 @@ module.exports = function(grunt) {
       options: {
         sassDir: 'assets/sass',
         cssDir: '.tmp/assets/css',
+        // CSS output mode. Can be: nested, expanded, compact, compressed.
+        outputStyle: 'compressed',
         // TODO : figure out what's the use of the options below
         generatedImagesDir: '.tmp/images/generated',
         imagesDir: 'assets/img',
@@ -101,20 +103,6 @@ module.exports = function(grunt) {
       watch: {
         options: {
           generatedImagesDir: 'assets/img/generated'
-        }
-      }
-    },
-
-    // Sass minification
-    cssmin: {
-      options: {
-        report: 'min'
-      },
-      watch: {
-        files: {
-          'assets/css/main.min.css': [
-            '.tmp/assets/css/app.css'
-          ]
         }
       }
     },
@@ -188,7 +176,7 @@ module.exports = function(grunt) {
     watch: {
       // WARNING : this setup is highly acrobatic :
       //  compiles BOTH lass AND sass on file change
-      //  Will better fits in a Yo generator... 
+      //  you better comment out either less: or compass: section below
       less: {
         files: [
           'assets/less/*.less',
@@ -279,8 +267,7 @@ module.exports = function(grunt) {
   // Compiles sass/less files to CSS
   if (grunt.config.get(['yeoman.useSass'])) {
     grunt.registerTask('compile-css', [
-      'compass',
-      'cssmin',
+      'compass'
     ]);
   } else {
     grunt.registerTask('compile-css', [

@@ -8,6 +8,7 @@
 * jshint-stylish for better reports
 * CSS autoprefixer task
 * Modernizr custom minimal build
+* Configurable dist folder for production use
 
 
 # [Roots Theme](http://roots.io/)

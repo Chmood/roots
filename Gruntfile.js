@@ -181,7 +181,26 @@ module.exports = function(grunt) {
       dist: [
         '<%= yeoman.dist %>'
       ]
+    },
+    copy: {
+      dist: {
+        files: [{
+          expand: true,
+            dot: true,
+            cwd: '.',
+            dest: '<%= yeoman.dist %>',
+            src: [
+              '*.{ico,png,txt}',
+              'assets/img/{,*/}*.webp',
+              'bower_components/sass-bootstrap/fonts/*.*',
+              'screenshot.{png/jpg/jpeg}',
+              '{,*/}*.php'
+            ]
+          }
+        ]
+      }
     }
+
   });
 
   // Register tasks
@@ -196,7 +215,8 @@ module.exports = function(grunt) {
   ]);
   grunt.registerTask('dist', [
     'clean:dist',
-    'modernizr'
+    'modernizr',
+    'copy:dist'
   ]);
 
 };

@@ -8,6 +8,13 @@ module.exports = function(grunt) {
   require('time-grunt')(grunt);
 
   grunt.initConfig({
+
+    // Project settings
+    yeoman: {
+      // Configurable paths
+      app: '.',
+      dist: '../roots-distrib'
+    },
     jshint: {
       options: {
         jshintrc: '.jshintrc',
@@ -119,6 +126,17 @@ module.exports = function(grunt) {
         jsHandle: 'roots_scripts'
       }
     },
+    // Generates a custom Modernizr build that includes only the tests you
+    // reference in your app
+    modernizr: {
+      devFile: 'bower_components/modernizr/modernizr.js',
+      outputFile: '<%= yeoman.dist %>/bower_components/modernizr/modernizr.js',
+      files: [
+        'assets/js/{,*/}*.js',
+        'assets/css/{,*/}*.css'
+      ],
+      uglify: true
+    },
     watch: {
       less: {
         files: [
@@ -154,16 +172,22 @@ module.exports = function(grunt) {
       }
     },
     clean: {
-      dist: [
+      options: {
+        force: true
+      },
+      watch: [
         'assets/css/main.min.css',
         'assets/js/scripts.min.js'
+      ],
+      dist: [
+        '<%= yeoman.dist %>'
       ]
     }
   });
 
   // Register tasks
   grunt.registerTask('default', [
-    'clean',
+    'clean:watch',
 //    'less',
     'compass',
     'cssmin',
@@ -171,8 +195,9 @@ module.exports = function(grunt) {
     'uglify',
     'version'
   ]);
-  grunt.registerTask('dev', [
-    'watch'
+  grunt.registerTask('dist', [
+    'clean:dist',
+    'modernizr'
   ]);
 
 };

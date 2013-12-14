@@ -66,7 +66,7 @@ module.exports = function(grunt) {
     },
     cssmin: {
       options: {
-        report: 'gzip'
+        report: 'min'
       },
       watch: {
         files: {
@@ -160,7 +160,7 @@ module.exports = function(grunt) {
         // Browser live reloading
         // https://github.com/gruntjs/grunt-contrib-watch#live-reloading
         options: {
-          livereload: false
+          livereload: true
         },
         files: [
           'assets/css/main.min.css',
@@ -194,6 +194,7 @@ module.exports = function(grunt) {
               '*.{ico,png,txt}',
               'assets/img/{,*/}*.webp',
               'bower_components/sass-bootstrap/fonts/*.*',
+              'bower_components/jquery/jquery.min.js',
               'screenshot.{png/jpg/jpeg}',
               '{,*/}*.php'
             ]

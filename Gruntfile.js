@@ -11,7 +11,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     // Project settings
     yeoman: {
-      useSass: false,
+      useSass: true,
       // Configurable paths
       app: '.',
       dist: '../roots-distrib'
@@ -182,8 +182,13 @@ module.exports = function(grunt) {
       uglify: true
     },
 
+    // WATCH DAEMON
     // Automatic tasks
+
     watch: {
+      // WARNING : this setup is highly acrobatic :
+      //  compiles BOTH lass AND sass on file change
+      //  Will better fits in a Yo generator... 
       less: {
         files: [
           'assets/less/*.less',
@@ -197,11 +202,16 @@ module.exports = function(grunt) {
         ],
         tasks: ['compass', 'cssmin', 'autoprefixer', 'version']
       },
+
       js: {
         files: [
           '<%= jshint.all %>'
         ],
         tasks: ['jshint', 'uglify', 'version']
+      },
+      jstest: {
+          files: ['test/spec/{,*/}*.js'],
+          tasks: ['test:watch']
       },
       // Files that trigger a livereload event
       livereload: {
@@ -247,7 +257,11 @@ module.exports = function(grunt) {
               'bower_components/sass-bootstrap/fonts/*.*',
               'bower_components/jquery/jquery.min.js',
               'screenshot.{png/jpg/jpeg}',
-              '{,*/}*.php'
+              '{,*/}*.php',
+              'assets/css/*.css',
+              'assets/fonts/*.*',
+              'assets/js/scripts.min.js',
+              'assets/js/vendor/{,*/}*.js'
             ]
           }
         ]
@@ -256,22 +270,29 @@ module.exports = function(grunt) {
 
   });
 
-  // Register tasks
+  /*****************************************************************************
+   *  TASKS REGISTERING
+   */
 
+  // Internal tasks, usually not called from grunt CLI
+
+  // Compiles sass/less files to CSS
   if (grunt.config.get(['yeoman.useSass'])) {
-    grunt.registerTask('build-css', [
+    grunt.registerTask('compile-css', [
       'compass',
       'cssmin',
     ]);
   } else {
-    grunt.registerTask('build-css', [
+    grunt.registerTask('compile-css', [
       'less',
     ]);
   }
 
+  // Public tasks, called from grunt CLI
+
   grunt.registerTask('default', [
     'clean:watch',
-    'build-css',
+    'compile-css',
     'autoprefixer',
     'uglify',
     'version'
@@ -287,8 +308,14 @@ module.exports = function(grunt) {
 
   // Aliases
   grunt.registerTask('server', function () {
-      grunt.log.warn('You can also use `watch` task.');
+      grunt.log.writeln('You can also use `watch` task.');
+      grunt.log.warn('`server` task will soon be deprecated !');
       grunt.task.run(['watch']);
+  });
+
+  grunt.registerTask('build', function () {
+      grunt.log.writeln('You can also use `dist` task.');
+      grunt.task.run(['dist']);
   });
 
 

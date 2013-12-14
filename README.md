@@ -1,4 +1,12 @@
-## Chmood's fork
+# Roots++
+
+Roots wordpress starter theme revisited.
+
+Proof of concept for a Yo generator
+Gruntfile and bower setup mostly inspired by *evangelistic* [webapp](https://github.com/yeoman/generator-webapp).
+
+
+## FEATURES
 
 ### CSS
 

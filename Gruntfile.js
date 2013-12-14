@@ -190,6 +190,7 @@ module.exports = function(grunt) {
             cwd: '.',
             dest: '<%= yeoman.dist %>',
             src: [
+              'style.css',
               '*.{ico,png,txt}',
               'assets/img/{,*/}*.webp',
               'bower_components/sass-bootstrap/fonts/*.*',
